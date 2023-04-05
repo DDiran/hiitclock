@@ -1,110 +1,116 @@
-<script>
-    let sets = 1;
-    let workTime = 30;
-    let restTime = 15;
-    let timerActive = false;
-    let currentSet = 1;
-    let remainingTime = 0;
-    let mode = 'work';
-    let intervalId;
-    let paused = false;
-  
-    function startTimer() {
+<script lang="ts">
+  import { browser } from '$app/environment';
+
+  import ProgressBar from "../lib/ProgressBar.svelte";
+  import Settings from "../lib/Settings.svelte";
+  import Display from "../lib/Display.svelte";
+  import Controls from "../lib/Controls.svelte";
+
+  let sets: number = 1;
+  let workTime: number = 20;
+  let restTime: number = 10;
+
+  let timerActive: boolean = false;
+  let paused: boolean = false;
+  let currentSet: number = 1;
+  let mode: 'work' | 'rest' = 'work';
+  let remainingTime: number = workTime;
+  let intervalId: number;
+
+  let audioContext: AudioContext | undefined;
+
+  $: totalWorkoutTime = (workTime + restTime) * sets - restTime;
+  $: timeElapsed = (currentSet - 1) * (workTime + restTime) + (mode === 'work' ? workTime - remainingTime : workTime + restTime - remainingTime);
+
+  function startTimer(): void {
+    if (!timerActive) {
       timerActive = true;
-      remainingTime = workTime;
-      mode = 'work';
+      paused = false;
       countdown();
     }
-  
-    function stopTimer() {
-      timerActive = false;
-      paused = true;
-      clearInterval(intervalId);
-    }
-
-    function continueTimer() {
-    paused = false;
-    countdown();
   }
 
+  function stopTimer(): void {
+    clearInterval(intervalId);
+    timerActive = false;
+    paused = true;
+  }
 
-  function resetTimer() {
-    stopTimer();
+  function resetTimer(): void {
+    clearInterval(intervalId);
+    timerActive = false;
+    paused = false;
     currentSet = 1;
     remainingTime = workTime;
     mode = 'work';
-    startTimer();
   }
-  
-    function countdown() {
-      intervalId = setInterval(() => {
-        remainingTime--;
-  
-        if (remainingTime === 0) {
-          if (mode === 'work' && currentSet < sets) {
-            mode = 'rest';
-            remainingTime = restTime;
+
+  function countdown(): void {
+    intervalId = setInterval(() => {
+      remainingTime--;
+
+      if (remainingTime <= 3 && remainingTime > 0) {
+        playShortBeep();
+      }
+
+      if (remainingTime === 0) {
+        playLongBeep();
+
+        if (mode === 'work' && currentSet < sets) {
+          mode = 'rest';
+          remainingTime = restTime;
+        } else {
+          currentSet++;
+          if (currentSet > sets) {
+            stopTimer();
+            currentSet = 1;
           } else {
-            currentSet++;
-            if (currentSet > sets) {
-              stopTimer();
-              currentSet = 1;
-            } else {
-              mode = 'work';
-              remainingTime = workTime;
-            }
+            mode = 'work';
+            remainingTime = workTime;
           }
         }
-      }, 1000);
-    }
-  </script>
-  
-  <main class="container mx-auto mt-10">
-    <h1 class="text-4xl font-bold mb-10 text-center">HIIT Clock</h1>
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-      <div>
-        <label for="sets" class="block text-sm font-medium text-gray-700">Sets</label>
-        <input type="number" min="1" id="sets" bind:value={sets} class="input input-bordered w-full" />
-      </div>
-      <div>
-        <label for="workTime" class="block text-sm font-medium text-gray-700">Work Time (seconds)</label>
-        <input type="number" min="1" id="workTime" bind:value={workTime} class="input input-bordered w-full" />
-      </div>
-      <div>
-        <label for="restTime" class="block text-sm font-medium text-gray-700">Rest Time (seconds)</label>
-        <input type="number" min="1" id="restTime" bind:value={restTime} class="input input-bordered w-full" />
-      </div>
-    </div>
-  
-    <div class="mt-8 text-center">
-      {#if !timerActive && !paused}
-        <button on:click={startTimer} class="btn btn-primary">
-          Start
-        </button>
-      {:else if timerActive}
-        <button on:click={stopTimer} class="btn btn-error">
-          Stop
-        </button>
-      {/if}
-      {#if paused}
-        <button on:click={continueTimer} class="btn btn-primary">
-          Continue
-        </button>
-        <button on:click={resetTimer} class="btn btn-error">
-          Reset
-        </button>
-      {/if}
-    </div>
-  
-    <div class="mt-10 text-center">
-      <div class="text-6xl font-bold">
-        {remainingTime}
-      </div>
-      <div class="text-xl">
-        {mode.toUpperCase()} - Set {currentSet} of {sets}
-      </div>
-    </div>
-  </main>
+      }
+    }, 1000);
+  }
+
+  if (browser && typeof AudioContext !== 'undefined') {
+  audioContext = new AudioContext();
+}
+
+  function playShortBeep(): void {
+    const duration = 0.1;
+    playBeep(660, duration);
+  }
+
+  function playLongBeep(): void {
+    const duration = 0.5;
+    playBeep(440, duration);
+  }
+
+  function playBeep(frequency: number, duration: number): void {
+    const oscillator = audioContext.createOscillator();
+    const gainNode = audioContext.createGain();
+
+    oscillator.frequency.value = frequency;
+    oscillator.type = 'sine';
+    gainNode.gain.setValueAtTime(0, audioContext.currentTime);
+    gainNode.gain.linearRampToValueAtTime(1, audioContext.currentTime + 0.01);
+
+    oscillator.connect(gainNode);
+    gainNode.connect(audioContext.destination);
+
+    oscillator.start(audioContext.currentTime);
+    gainNode.gain.exponentialRampToValueAtTime(0.001, audioContext.currentTime + duration);
+    oscillator.stop(audioContext.currentTime + duration);
+  }
+</script>
+
+<main class="container mx-auto mt-10">
+  <ProgressBar {totalWorkoutTime} {timeElapsed} />
+  <Settings bind:sets bind:workTime bind:restTime />
+  <Display {currentSet} {sets} {remainingTime} {mode} />
+  <Controls {timerActive} {paused} {startTimer} {stopTimer} {resetTimer} />
+</main>
   
   <style>
 
