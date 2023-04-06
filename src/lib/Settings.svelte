@@ -4,24 +4,23 @@
     export let restTime: number;
   </script>
   
-  <div class="grid grid-cols-3 gap-4">
-    <div class="form-control">
-      <label class="label">
-        <span>Sets</span>
-        <input type="number" bind:value={sets} min="1" class="input input-bordered" />
+  <div class="grid justify-center lg:grid-cols-3 gap-4 mx-12 md:mx-auto">
+    <div class="form-control w-full">
+      <label class="label" for="sets">
+        <span class="label-text text-white">Number of Sets</span>
       </label>
+      <input id="sets" type="number" bind:value={sets} min="1" class="text-dark input input-bordered w-full max-w-sm" />
     </div>
-    <div class="form-control">
-      <label class="label">
-        <span>Work Time</span>
-        <input type="number" bind:value={workTime} min="1" class="input input-bordered" />
+    <div class="form-control w-full">
+      <label class="label" for="time">
+        <span class="label-text text-white">Time per set</span>
       </label>
+      <input id="time" type="number" bind:value={workTime} min="1" class="text-dark input input-bordered w-full max-w-sm" />
     </div>
-    <div class="form-control">
-      <label class="label">
-        <span>Rest Time</span>
-        <input type="number" bind:value={restTime} min="1" class="input input-bordered" />
+    <div class="form-control w-full">
+      <label class="label" for="rest">
+        <span class="label-text text-white">Rest time</span>
       </label>
+      <input id="rest" type="number" bind:value={restTime} min="1" class="text-dark input input-bordered w-full max-w-sm" />
     </div>
   </div>
-  

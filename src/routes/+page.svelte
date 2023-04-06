@@ -6,9 +6,13 @@
   import Display from "../lib/Display.svelte";
   import Controls from "../lib/Controls.svelte";
 
-  let sets: number = 1;
-  let workTime: number = 20;
-  let restTime: number = 10;
+  // Add bg-base-300 to body in sveltekit
+  //
+  //
+
+  let sets: number = 10;
+  let workTime: number = 40;
+  let restTime: number = 20;
 
   let timerActive: boolean = false;
   let paused: boolean = false;
@@ -21,6 +25,7 @@
 
   $: totalWorkoutTime = (workTime + restTime) * sets - restTime;
   $: timeElapsed = (currentSet - 1) * (workTime + restTime) + (mode === 'work' ? workTime - remainingTime : workTime + restTime - remainingTime);
+  $: sessionTime = Math.round(((workTime + restTime) * sets) / 60);
 
   function startTimer(): void {
     if (!timerActive) {
@@ -105,11 +110,27 @@
   }
 </script>
 
+<div class="navbar bg-base-400">
+  <div class="container mx-auto">
+    <div class="flex-1">
+      <a href="/" class="btn btn-ghost normal-case text-xl">JustHIIT.it</a>
+    </div>
+  <div class="flex-none">
+    <ul class="menu menu-horizontal px-1">
+      <li>Workout Time: {sessionTime} minutes</li>
+    </div>
+</div>
+</div>
+
 <main class="container mx-auto mt-10">
-  <ProgressBar {totalWorkoutTime} {timeElapsed} />
+  <!-- <ProgressBar {totalWorkoutTime} {timeElapsed} /> -->
   <Settings bind:sets bind:workTime bind:restTime />
-  <Display {currentSet} {sets} {remainingTime} {mode} />
-  <Controls {timerActive} {paused} {startTimer} {stopTimer} {resetTimer} />
+
+  <div class="my-24">
+    <Display {currentSet} {sets} {remainingTime} {mode} />
+    <Controls {timerActive} {paused} {startTimer} {stopTimer} {resetTimer} />
+  </div>
+
 </main>
   
   <style>
