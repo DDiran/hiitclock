@@ -1,14 +1,9 @@
 <script lang="ts">
   import { browser } from '$app/environment';
 
-  import ProgressBar from "../lib/ProgressBar.svelte";
   import Settings from "../lib/Settings.svelte";
   import Display from "../lib/Display.svelte";
   import Controls from "../lib/Controls.svelte";
-
-  // Add bg-base-300 to body in sveltekit
-  //
-  //
 
   let sets: number = 10;
   let workTime: number = 40;
@@ -25,7 +20,6 @@
 
   $: totalWorkoutTime = (workTime + restTime) * sets - restTime;
   $: timeElapsed = (currentSet - 1) * (workTime + restTime) + (mode === 'work' ? workTime - remainingTime : workTime + restTime - remainingTime);
-  $: sessionTime = Math.round(((workTime + restTime) * sets) / 60);
 
   function startTimer(): void {
     if (!timerActive) {
@@ -110,30 +104,29 @@
   }
 </script>
 
-<div class="navbar bg-base-400">
-  <div class="container mx-auto">
-    <div class="flex-1">
-      <a href="/" class="btn btn-ghost normal-case text-xl">JustHIIT.it</a>
-    </div>
-  <div class="flex-none">
-    <ul class="menu menu-horizontal px-1">
-      <li>Workout Time: {sessionTime} minutes</li>
-    </div>
-</div>
-</div>
-
-<main class="container mx-auto mt-10">
-  <!-- <ProgressBar {totalWorkoutTime} {timeElapsed} /> -->
-  <Settings bind:sets bind:workTime bind:restTime />
-
-  <div class="my-24">
-    <Display {currentSet} {sets} {remainingTime} {mode} />
-    <Controls {timerActive} {paused} {startTimer} {stopTimer} {resetTimer} />
+  <div class="navbar bg-base-400 shadow-md">
+    <div class="container mx-auto">
+      <div class="flex-1">
+        <a href="/" class="btn btn-ghost normal-case text-xl">JustHIIT.it</a>
+      </div>
+    <div class="flex-none">
+      <ul class="menu menu-horizontal px-1">
+        <li>Workout Time: {Math.round(totalWorkoutTime/60)} minutes</li>
+      </div>
+  </div>
   </div>
 
-</main>
+  <main class="container mx-auto mb-auto mt-10 flex-grow">
+    <Settings bind:sets bind:workTime bind:restTime {timerActive} />
+    <Controls {timerActive} {paused} {startTimer} {stopTimer} {resetTimer} />
   
-  <style>
-
-  </style>
+    <div class="my-24">
+      <Display {currentSet} {sets} {remainingTime} {mode} {totalWorkoutTime} {timeElapsed} />
+    </div>
+  </main>
   
+  <!-- <footer class="footer footer-center mt-auto p-4 bg-base-400 text-base-content">
+    <div class="text-white font-sans">
+      <p>Copyright © 2023 - All right reserved by ACME Industries Ltd</p>
+    </div>
+  </footer> -->
