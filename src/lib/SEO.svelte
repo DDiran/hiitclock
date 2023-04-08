@@ -19,4 +19,6 @@
     <meta property="twitter:title" content="JustHIIT.it | High-Intensity Interval Training & Tabata Timer">
     <meta property="twitter:description" content="A simple, modern and user-friendly timer for High-Intensity Interval Training & Tabata workouts. Set the number of sets, work time, and rest time to start your workout.">
     <meta property="twitter:image" content="https://yourwebsite.com/images/twitter-image.jpg">
+
+    <script async defer data-website-id="402dc1d7-1b95-4e23-b10c-fc0942a8419e" src="https://analytics.ddlawson.com/umami.js"></script>
 </svelte:head>
