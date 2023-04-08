@@ -4,6 +4,7 @@
   import Settings from "../lib/Settings.svelte";
   import Display from "../lib/Display.svelte";
   import Controls from "../lib/Controls.svelte";
+  import Seo from '../lib/SEO.svelte';
 
   let sets: number = 10;
   let workTime: number = 40;
@@ -103,6 +104,8 @@
     oscillator.stop(audioContext.currentTime + duration);
   }
 </script>
+
+<Seo />
 
   <div class="navbar bg-base-400 shadow-md">
     <div class="container mx-auto">
