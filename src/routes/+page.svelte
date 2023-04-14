@@ -57,35 +57,33 @@ function resetTimer(): void {
 }
 
 function countdown(): void {
-  intervalId = setInterval(() => {
-    remainingTime--;
+  remainingTime--;
 
-    if (remainingTime <= 3 && remainingTime > 0) {
-      if (audioContext) {
-        playShortBeep(audioContext);
-      }
+  if (remainingTime <= 3 && remainingTime > 0) {
+    if (audioContext) {
+      playShortBeep(audioContext);
+    }
+  }
+
+  if (remainingTime === 0) {
+    if (audioContext) {
+      playLongBeep(audioContext);
     }
 
-    if (remainingTime === 0) {
-      if (audioContext) {
-        playLongBeep(audioContext);
-      }
-
-      if (mode === "work" && currentSet < sets) {
-        mode = "rest";
-        remainingTime = restTime;
+    if (mode === "work" && currentSet < sets) {
+      mode = "rest";
+      remainingTime = restTime;
+    } else {
+      currentSet++;
+      if (currentSet > sets) {
+        stopTimer();
+        currentSet = 1;
       } else {
-        currentSet++;
-        if (currentSet > sets) {
-          stopTimer();
-          currentSet = 1;
-        } else {
-          mode = "work";
-          remainingTime = workTime;
-        }
+        mode = "work";
+        remainingTime = workTime;
       }
     }
-  }, 1000);
+  }
 }
 
 if (browser) {
