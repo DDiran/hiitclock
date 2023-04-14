@@ -1,5 +1,7 @@
 <script lang="ts">
+import { onMount, onDestroy } from "svelte";
 import { browser } from "$app/environment";
+import JSConfetti from "js-confetti";
 
 import Settings from "$lib/components/Settings.svelte";
 import Display from "$lib/components/Display.svelte";
@@ -23,6 +25,7 @@ let currentSet: number = 1;
 let mode: "work" | "rest" = "work";
 let remainingTime: number = workTime;
 let intervalId: TimerId;
+let jsConfetti: JSConfetti | undefined;
 
 let audioContext: AudioContext | undefined;
 
@@ -78,6 +81,13 @@ function countdown(): void {
       if (currentSet > sets) {
         stopTimer();
         currentSet = 1;
+        if (jsConfetti) {
+          jsConfetti.addConfetti({
+            emojis: ["💪", "🏋️", "🏃", "🎊", "🎉", "🥳"],
+            emojiSize: 75,
+            confettiNumber: 300,
+          });
+        }
       } else {
         mode = "work";
         remainingTime = workTime;
@@ -89,6 +99,14 @@ function countdown(): void {
 if (browser) {
   audioContext = createAudioContext();
 }
+
+onMount(() => {
+  jsConfetti = new JSConfetti();
+});
+
+onDestroy(() => {
+  jsConfetti = undefined;
+});
 </script>
 
 <Seo />
