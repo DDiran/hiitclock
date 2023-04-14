@@ -5,7 +5,7 @@ import {
   getByLabelText,
   screen,
 } from "@testing-library/svelte";
-import Settings from "../src/lib/Settings.svelte";
+import Settings from "$lib/components/Settings.svelte";
 
 test("Settings: input fields are updated correctly", async () => {
   const { container } = render(Settings, {

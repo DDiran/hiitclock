@@ -121,6 +121,7 @@ if (browser) {
 
   <div class="my-24">
     <Display
+      timerActive={timerActive}
       currentSet={currentSet}
       sets={sets}
       remainingTime={remainingTime}
