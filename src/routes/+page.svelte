@@ -83,7 +83,8 @@ function countdown(): void {
         currentSet = 1;
         if (jsConfetti) {
           jsConfetti.addConfetti({
-            emojis: ["💪", "🏋️", "🏃", "🎊", "🎉", "🥳"],
+            // emojis: ["💪", "🏋️", "🏃", "🎊", "🎉", "🥳"],
+            emojis: ["💪"],
             emojiSize: 75,
             confettiNumber: 300,
           });
@@ -149,8 +150,12 @@ onDestroy(() => {
   </div>
 </main>
 
-<!-- <footer class="footer footer-center mt-auto p-4 bg-base-400 text-base-content">
-    <div class="text-white font-sans">
-      <p>Copyright © 2023 - All right reserved by ACME Industries Ltd</p>
-    </div>
-  </footer> -->
+<footer class="footer footer-center mt-auto p-4 bg-base-400 text-base-content">
+  <div class="text-white font-sans">
+    <!-- copyright current year -->
+    <p>
+      Copyright © {new Date().getFullYear()} - Made with
+      <span aria-label="love">❤️</span> in Italy
+    </p>
+  </div>
+</footer>
