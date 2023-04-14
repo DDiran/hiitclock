@@ -1,11 +1,9 @@
-[
-  {
-    "workbench.colorTheme": "Solarized Dark",
-    "[javascript][html][typescript]": {
-      "editor.defaultFormatter": "esbenp.prettier-vscode"
-    },
-    "[svelte]": {
-      "editor.defaultFormatter": "svelte.svelte-vscode"
-    }
+{
+  "workbench.colorTheme": "Solarized Light",
+  "[javascript][html][typescript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[svelte]": {
+    "editor.defaultFormatter": "svelte.svelte-vscode"
   }
-]
+}
