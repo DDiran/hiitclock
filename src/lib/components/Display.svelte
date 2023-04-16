@@ -1,14 +1,16 @@
 <script lang="ts">
-export let timerActive: boolean;
-export let currentSet: number;
-export let sets: number;
-export let remainingTime: number;
-export let mode: string;
-export let totalWorkoutTime: number;
-export let timeElapsed: number;
+import timerStore, {
+  setCurrentSet,
+  setMode,
+  setRemainingTime,
+} from "$lib/timerStore";
 
-$: progressPercentage = timerActive
-  ? Math.round((timeElapsed / totalWorkoutTime) * 100)
+let currentSet = $timerStore.currentSet;
+
+let progressPercentage: number;
+
+$: progressPercentage = $timerActive
+  ? Math.round(($timeElapsed / $totalWorkoutTime) * 100)
   : 0;
 </script>
 
@@ -17,14 +19,17 @@ $: progressPercentage = timerActive
     <div class="card w-full h-full bg-base-400 shadow-xl flex flex-col">
       <div class="card-body flex-1">
         <h2 class="card-title justify-center text-4xl font-serif font-normal">
-          {mode === "work" ? "Set" : "Rest"}
-          {currentSet}/{sets}
+          {$currentMode === "work" ? "Set" : "Rest"}
+          {$currentSet}/{$totalSets}
         </h2>
         <p class="font-serif text-xl italic opacity-70">Keep it going.</p>
         <div class="justify-center">
           <div class="text-[128px]">
             <span class="[text-shadow:_0_10px_10px_rgba(0,0,0,25%)]"
-              >{Math.floor(remainingTime / 60)}:{remainingTime % 60}</span>
+              >{Math.floor($remainingTime / 60)}:{(
+                "0" +
+                ($remainingTime % 60)
+              ).slice(-2)}</span>
           </div>
         </div>
       </div>
