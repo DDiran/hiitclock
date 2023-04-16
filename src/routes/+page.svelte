@@ -7,6 +7,7 @@ import Settings from "$lib/components/Settings.svelte";
 import Display from "$lib/components/Display.svelte";
 import Controls from "$lib/components/Controls.svelte";
 import Seo from "$lib/components/SEO.svelte";
+import Navbar from "$lib/components/Navbar.svelte";
 
 import { createAudioContext, playShortBeep, playLongBeep } from "$lib/audio";
 import type { TimerId } from "$lib/timer";
@@ -85,8 +86,8 @@ function countdown(): void {
           jsConfetti.addConfetti({
             // emojis: ["💪", "🏋️", "🏃", "🎊", "🎉", "🥳"],
             emojis: ["💪"],
-            emojiSize: 75,
-            confettiNumber: 300,
+            emojiSize: 100,
+            confettiNumber: 500,
           });
         }
       } else {
@@ -106,24 +107,13 @@ onMount(() => {
 });
 
 onDestroy(() => {
-  jsConfetti = undefined;
+  jsConfetti?.clearCanvas();
 });
 </script>
 
 <Seo />
 
-<div class="navbar bg-base-400 shadow-md">
-  <div class="container mx-auto">
-    <div class="flex-1">
-      <a href="/" class="btn btn-ghost normal-case text-xl">JustHIIT.it</a>
-    </div>
-    <div class="flex-none">
-      <ul class="menu menu-horizontal px-1">
-        <li>Workout Time: {Math.round(totalWorkoutTime / 60)} minutes</li>
-      </ul>
-    </div>
-  </div>
-</div>
+<Navbar />
 
 <main class="container mx-auto mb-auto mt-10 flex-grow">
   <Settings
