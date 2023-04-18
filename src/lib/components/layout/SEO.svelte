@@ -2,18 +2,23 @@
 import { TITLE, DESCRIPTION, KEYWORDS, AUTHOR } from "$lib/constants";
 
 let title = TITLE;
-if (import.meta.env.NODE_ENV !== "production") {
-  title = `Dev | ${title}`;
+
+$: {
+  if (process.env.NODE_ENV !== "production") {
+    title = `Dev | ${title}`;
+  } else {
+    title = TITLE;
+  }
 }
 
 const umamiAnalytics =
-  import.meta.env.NODE_ENV === "production"
+  process.env.NODE_ENV === "production"
     ? `
-        async
-        defer
-        data-website-id="402dc1d7-1b95-4e23-b10c-fc0942a8419e"
-        src="https://analytics.ddlawson.com/umami.js"
-    `
+          async
+          defer
+          data-website-id="402dc1d7-1b95-4e23-b10c-fc0942a8419e"
+          src="https://analytics.ddlawson.com/umami.js"
+      `
     : "";
 </script>
 
