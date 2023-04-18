@@ -36,10 +36,10 @@ $: {
     $timerStore.countdown <= 3 &&
     $timerStore.countdown >= 0
   ) {
-    if ($timerStore.countdown > 0) {
-      playShortBeep(audioContext);
-    } else {
+    if ($timerStore.countdown === 0 && !$timerStore.workoutCompleted) {
       playLongBeep(audioContext);
+    } else if ($timerStore.countdown > 0) {
+      playShortBeep(audioContext);
     }
   }
 }
@@ -61,5 +61,4 @@ onDestroy(() => {
   <Settings />
   <Controls />
   <Display />
-  <!-- <TimerTwo /> -->
 </main>

@@ -27,10 +27,10 @@ Current Features:
 - Progress bar to visualize workout progress.
 - Responsive design for use on various devices.
 - Browser-generated audio notifications to indicate the start and end of work and rest periods.
+- Add confetti when workout completes
 
 Planned Features:
 
-- Add confetti when workout completes
 - Animations, transitions for a better user experience.
 - Graphics and illustrations to prettify the UI (including hiding the timer when not in use).
 - Spotify integration so you can play your favorite tracks directly from the browser during your workout.
