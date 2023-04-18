@@ -5,6 +5,7 @@ import {
   startTimer,
   pauseTimer,
   resetTimer,
+  unpauseTimer,
 } from "$lib/timerStore";
 </script>
 
@@ -21,7 +22,7 @@ import {
   {#if $timerStore.workoutStarted && $timerStore.workoutPaused}
     <button
       class="border-secondary border rounded-2xl px-16 py-4 hover:bg-secondary hover:border-secondary"
-      on:click={startTimer}>Continue</button>
+      on:click={unpauseTimer}>Continue</button>
     <button
       class="border-primary border rounded-2xl px-16 py-4 hover:bg-primary hover:border-primary"
       on:click={resetTimer}>Reset</button>
