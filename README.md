@@ -31,6 +31,8 @@ Current Features:
 Planned Features:
 
 - Add confetti when workout completes
+- Animations, transitions for a better user experience.
+- Graphics and illustrations to prettify the UI (including hiding the timer when not in use).
 - Spotify integration so you can play your favorite tracks directly from the browser during your workout.
 - Preset workout templates for quick and easy access to popular HIIT routines.
 - User accounts to save custom workouts and track progress over time.

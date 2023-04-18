@@ -13,6 +13,8 @@ export interface TimerState {
   currentSet: number;
   isWork: boolean;
   workoutStarted: boolean;
+  workoutPaused: boolean;
+  workoutCompleted: boolean;
 }
 
 const initialState: TimerState = {
@@ -23,12 +25,15 @@ const initialState: TimerState = {
   currentSet: 1,
   isWork: true,
   workoutStarted: false,
+  workoutPaused: false,
+  workoutCompleted: false,
 };
 
 const timerStore = writable<TimerState>(initialState);
 
 let interval: ReturnType<typeof setInterval>;
 
+// Main timer logic
 function startTimer() {
   timerStore.update((state: TimerState): TimerState => {
     if (!state.workoutStarted) {
@@ -36,7 +41,12 @@ function startTimer() {
       interval = setInterval(() => {
         timerStore.update(updateTimer);
       }, 1000);
-      return { ...state, workoutStarted: true };
+      return {
+        ...state,
+        workoutStarted: true,
+        workoutPaused: false,
+        workoutCompleted: false,
+      };
     }
     return state;
   });
@@ -65,7 +75,12 @@ function moveToNextSet(state: TimerState): TimerState {
 
 function stopWorkout(state: TimerState): TimerState {
   clearInterval(interval);
-  return { ...state, workoutStarted: false };
+  return {
+    ...state,
+    workoutStarted: false,
+    workoutPaused: false,
+    workoutCompleted: true,
+  };
 }
 
 function updateTimer(state: TimerState): TimerState {
@@ -82,10 +97,23 @@ function updateTimer(state: TimerState): TimerState {
   }
 }
 
+// Pause, unpause, and reset timer
 function pauseTimer() {
   timerStore.update((state: TimerState): TimerState => {
     clearInterval(interval);
-    return { ...state, workoutStarted: false };
+    return { ...state, workoutPaused: true };
+  });
+}
+
+function unpauseTimer() {
+  timerStore.update((state: TimerState): TimerState => {
+    if (state.workoutPaused) {
+      interval = setInterval(() => {
+        timerStore.update(updateTimer);
+      }, 1000);
+      return { ...state, workoutPaused: false };
+    }
+    return state;
   });
 }
 
@@ -96,18 +124,7 @@ function resetTimer() {
   });
 }
 
-function incrementCurrentSet() {
-  timerStore.update((state: TimerState): TimerState => {
-    return { ...state, currentSet: state.currentSet + 1 };
-  });
-}
-
-function decrementCurrentSet() {
-  timerStore.update((state: TimerState): TimerState => {
-    return { ...state, currentSet: state.currentSet - 1 };
-  });
-}
-
+// Helper functions
 const formatTime = (value: number): string => {
   return value.toString().padStart(2, "0");
 };
@@ -130,7 +147,10 @@ const progressPercentage = derived(
         ($timerStore.workTime + $timerStore.restTime) +
       elapsedTimeInCurrentSet;
 
-    return Math.max(0, (completedTime / $totalWorkoutTime) * 100);
+    // Adjust total workout time to exclude the last rest time
+    const adjustedTotalWorkoutTime = $totalWorkoutTime - $timerStore.restTime;
+
+    return Math.max(0, (completedTime / adjustedTotalWorkoutTime) * 100);
   }
 );
 
@@ -143,9 +163,8 @@ export {
   updateTimer,
   startTimer,
   pauseTimer,
+  unpauseTimer,
   resetTimer,
-  incrementCurrentSet,
-  decrementCurrentSet,
   formatTime,
   totalWorkoutTime,
   progressPercentage,

@@ -5,9 +5,8 @@ import { browser } from "$app/environment";
 import Settings from "$lib/components/Settings.svelte";
 import Display from "$lib/components/Display.svelte";
 import Controls from "$lib/components/Controls.svelte";
-// import Timer from "$lib/components/Timer.svelte";
-// import TimerTwo from "$lib/components/TimerTwo.svelte";
 
+import { timerStore } from "$lib/timerStore";
 import {
   createAudioContext,
   playShortBeep,
@@ -18,22 +17,39 @@ import JSConfetti from "js-confetti";
 let audioContext: AudioContext | undefined;
 let jsConfetti: JSConfetti | undefined;
 
-function addConfetti() {
-  if (jsConfetti) {
-    jsConfetti.addConfetti({
-      emojis: ["💪"],
-      emojiSize: 100,
-      confettiNumber: 500,
-    });
+// If the workout completes, show confetti
+$: {
+  if ($timerStore.workoutCompleted) {
+    if (jsConfetti) {
+      jsConfetti.addConfetti({
+        emojis: ["💪"],
+        emojiSize: 100,
+        confettiNumber: 500,
+      });
+    }
   }
 }
 
-if (browser) {
-  audioContext = createAudioContext();
+$: {
+  if (
+    audioContext &&
+    $timerStore.countdown <= 3 &&
+    $timerStore.countdown >= 0
+  ) {
+    if ($timerStore.countdown > 0) {
+      playShortBeep(audioContext);
+    } else {
+      playLongBeep(audioContext);
+    }
+  }
 }
 
 onMount(() => {
   jsConfetti = new JSConfetti();
+  // If the browser supports audio, create an audio context
+  if (browser) {
+    audioContext = createAudioContext();
+  }
 });
 
 onDestroy(() => {
