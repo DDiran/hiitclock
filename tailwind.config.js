@@ -11,6 +11,8 @@ module.exports = {
       colors: {
         dark: "#30363D",
         "base-400": "#3C444C",
+        "grade-1": "#F27A54",
+        "grade-2": "#A154F2",
       },
     },
   },
