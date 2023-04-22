@@ -3,8 +3,11 @@ import SettingsSets from "$lib/components/settings/SettingsSets.svelte";
 import SettingsTime from "$lib/components/settings/SettingsTime.svelte";
 import OptionCard from "$lib/components/settings/OptionCard.svelte";
 
+// @ts-ignore
 import TimerImage from "$lib/assets/timer.png?as=src&width=500&height=300&quality=95&format=webp";
+// @ts-ignore
 import SetImage from "$lib/assets/sets.png?as=src&width=500&height=300&quality=95&format=webp";
+// @ts-ignore
 import WorkoutImage from "$lib/assets/workout.png?as=src&width=500&height=300&quality=95&format=webp";
 
 import { showSettings } from "$lib/stores/workoutStore";

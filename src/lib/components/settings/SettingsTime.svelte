@@ -1,32 +1,34 @@
 <script lang="ts">
-import { timerStore } from "$lib/stores/timerStore";
+import { timerStore, totalSetTime } from "$lib/stores/timerStore";
 import NumberInput from "$lib/components/NumberInput.svelte";
 
-let totalWorkoutTime = 30;
-let restTime = 10;
+let workoutMinutes = 15;
 
-const startWorkout = () => {
-  $timerStore.sets = Math.floor(
-    (totalWorkoutTime * 60) / ($timerStore.workTime + restTime)
-  );
-  $timerStore.restTime = restTime;
-  $timerStore.workoutStarted = true;
+const calculateNumberOfSets = () => {
+  const totalWorkoutTime = workoutMinutes * 60;
+  $timerStore.sets = Math.floor(totalWorkoutTime / $totalSetTime);
 };
 </script>
 
 <form>
-  <div class="grid justify-center lg:grid-cols-2 gap-4 mx-12 md:mx-auto">
+  <div class="grid justify-center lg:grid-cols-3 gap-4 mx-12 md:mx-auto">
     <NumberInput
-      id="totalWorkoutTime"
-      label="Total workout time (minutes)"
-      bind:value={totalWorkoutTime}
-      on:update={(e) => (totalWorkoutTime = e.detail)}
-      min={1} />
+      id="sets"
+      label="What's the total workout time (in minutes?)"
+      bind:value={workoutMinutes}
+      on:update={calculateNumberOfSets}
+      disabled={$timerStore.workoutStarted} />
     <NumberInput
-      id="restTime"
-      label="Rest time (seconds)"
-      bind:value={restTime}
-      on:update={(e) => (restTime = e.detail)}
-      min={1} />
+      id="time"
+      label="Time per set"
+      bind:value={$timerStore.workTime}
+      on:update={(e) => ($timerStore.workTime = e.detail)}
+      disabled={$timerStore.workoutStarted} />
+    <NumberInput
+      id="rest"
+      label="Rest time"
+      bind:value={$timerStore.restTime}
+      on:update={(e) => ($timerStore.restTime = e.detail)}
+      disabled={$timerStore.workoutStarted} />
   </div>
 </form>

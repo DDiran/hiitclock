@@ -1,6 +1,7 @@
 <script lang="ts">
 import { Icon, Plus, Minus } from "svelte-hero-icons";
 import { createEventDispatcher } from "svelte";
+import { slide } from "svelte/transition";
 
 export let id: string = "";
 export let label: string = "";
@@ -25,7 +26,7 @@ const handleInput = (event: Event): void => {
 };
 </script>
 
-<div class="form-control w-full">
+<div class="form-control w-full" transition:slide|local>
   <label class="label" for={id}>
     <span class="label-text text-white">{label}</span>
   </label>

@@ -134,6 +134,11 @@ const totalWorkoutTime = derived(
     ($timerStore.workTime + $timerStore.restTime) * $timerStore.sets
 );
 
+const totalSetTime = derived(
+  timerStore,
+  ($timerStore) => $timerStore.workTime + $timerStore.restTime
+);
+
 const progressPercentage = derived(
   [timerStore, totalWorkoutTime],
   ([$timerStore, $totalWorkoutTime]) => {
@@ -165,6 +170,7 @@ export {
   unpauseTimer,
   resetTimer,
   formatTime,
+  totalSetTime,
   totalWorkoutTime,
   progressPercentage,
 };
