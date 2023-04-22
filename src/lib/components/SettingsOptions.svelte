@@ -5,49 +5,55 @@ import OptionCard from "$lib/components/OptionCard.svelte";
 
 import TimerImage from "$lib/assets/timer.png?as=src&width=500&height=300&quality=95&format=webp";
 import SetImage from "$lib/assets/sets.png?as=src&width=500&height=300&quality=95&format=webp";
+import WorkoutImage from "$lib/assets/workout.png?as=src&width=500&height=300&quality=95&format=webp";
+
+import { showSettings } from "$lib/stores/workoutStore";
 
 let selectedOption = "sets";
-let showSettings = false;
 
 function onSelectOption(value: string) {
   selectedOption = value;
 }
 </script>
 
-<div class="options">
-  <h2>Select an option:</h2>
-  <label>
-    <input type="radio" value="sets" bind:group={selectedOption} />
-    Set the number of sets
-  </label>
-  <label>
-    <input type="radio" value="workoutTime" bind:group={selectedOption} />
-    Set the workout time
-  </label>
-  <button class="btn brn-tertiary btn-xl" on:click={() => (showSettings = true)}
-    >Next</button>
-</div>
-
-<form>
-  <div class="flex flex-row gap-4 justify-center">
-    <OptionCard
-      checked={selectedOption === "sets"}
-      value="sets"
-      onSelectOption={onSelectOption}
-      id="time-select"
-      image={TimerImage}
-      title="Workout by Time" />
-    <OptionCard
-      checked={selectedOption === "workoutTime"}
-      value="workoutTime"
-      onSelectOption={onSelectOption}
-      id="set-select"
-      image={SetImage}
-      title="Workout by # Sets" />
-  </div>
-</form>
-
 {#if showSettings}
+  <form>
+    <div class="flex flex-row gap-4 justify-center">
+      <OptionCard
+        checked={selectedOption === "sets"}
+        value="sets"
+        onSelectOption={onSelectOption}
+        id="time-select"
+        image={TimerImage}
+        category="Time-Based"
+        title="Workout by Time"
+        copy="Choose the duration of your workout." />
+      <OptionCard
+        checked={selectedOption === "workoutTime"}
+        value="workoutTime"
+        onSelectOption={onSelectOption}
+        id="set-select"
+        image={SetImage}
+        category="Exercise-Based"
+        title="Workout by # Sets"
+        copy="Choose how many sets to complete." />
+      <OptionCard
+        checked={selectedOption === "None"}
+        value="None"
+        onSelectOption={onSelectOption}
+        id="workout-select"
+        image={WorkoutImage}
+        category="Program-Based"
+        title="Workout like a Pro"
+        copy="Choose from proven best workouts." />
+    </div>
+    <div class="flex flex-col my-9 mx-96">
+      <button
+        class="btn brn-tertiary btn-xl justify-center text-center object-centers"
+        on:click={() => (showSettings = true)}>Next</button>
+    </div>
+  </form>
+{:else if showSettings}
   {#if selectedOption === "sets"}
     <SettingsSets />
   {:else if selectedOption === "workoutTime"}

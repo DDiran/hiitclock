@@ -1,5 +1,5 @@
 <script lang="ts">
-import { timerStore } from "$lib/timerStore";
+import { timerStore } from "$lib/stores/timerStore";
 import NumberInput from "$lib/components/NumberInput.svelte";
 
 let totalWorkoutTime = 30;

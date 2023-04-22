@@ -6,7 +6,7 @@ import Settings from "$lib/components/SettingsSets.svelte";
 import Display from "$lib/components/Display.svelte";
 import Controls from "$lib/components/Controls.svelte";
 
-import { timerStore } from "$lib/timerStore";
+import { timerStore } from "$lib/stores/timerStore";
 import {
   createAudioContext,
   playShortBeep,

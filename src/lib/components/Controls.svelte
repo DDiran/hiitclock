@@ -6,7 +6,7 @@ import {
   pauseTimer,
   resetTimer,
   unpauseTimer,
-} from "$lib/timerStore";
+} from "$lib/stores/timerStore";
 </script>
 
 <div class="flex justify-center space-x-4 mt-8">

@@ -1,86 +1,3 @@
-<!-- <script lang="ts">
-import { onDestroy } from "svelte";
-import {
-  timerStore,
-  incrementCount,
-  decrementCount,
-  incrementCurrentSet,
-  decrementCurrentSet,
-  startTimer,
-  pauseTimer,
-  resetTimer,
-  formatTime,
-} from "$lib/timerStore";
-
-let showControls = false;
-
-const handleStart = () => {
-  startTimer();
-  showControls = true;
-};
-
-onDestroy(() => {
-  resetTimer();
-});
-</script>
-
-<section
-  class="bg-white text-gray-900 min-h-screen flex flex-col items-center justify-center">
-  <h1 class="text-4xl font-bold mb-8">HIIT Timer</h1>
-
-  <div class="flex items-center mb-8">
-    <label for="workTime" class="mr-4 font-semibold">Work Time:</label>
-    <button
-      id="workTime"
-      class="bg-blue-500 text-white px-4 py-2 rounded mr-4"
-      on:click={() => incrementCount()}>+</button>
-    <h2 class="text-3xl font-semibold">{$timerStore.count}</h2>
-    <button
-      class="bg-blue-500 text-white px-4 py-2 rounded ml-4"
-      on:click={() => decrementCount()}>-</button>
-  </div>
-
-  <div class="flex items-center mb-8">
-    <label for="sets" class="mr-4 font-semibold">Sets:</label>
-    <button
-      id="sets"
-      class="bg-blue-500 text-white px-4 py-2 rounded mr-4"
-      on:click={() => incrementCurrentSet()}>+</button>
-    <h2 class="text-3xl font-semibold">{$timerStore.currentSet}</h2>
-    <button
-      class="bg-blue-500 text-white px-4 py-2 rounded ml-4"
-      on:click={() => decrementCurrentSet()}>-</button>
-  </div>
-
-  <div class="mb-8">
-    <h2 class="text-3xl font-semibold">
-      {formatTime(Math.floor($timerStore.count / 60))}:{formatTime(
-        $timerStore.count % 60
-      )}
-    </h2>
-  </div>
-
-  <div class="flex space-x-4 mb-8">
-    <button
-      class="bg-green-500 text-white px-4 py-2 rounded"
-      on:click={handleStart}>Start</button>
-    {#if showControls}
-      <button
-        class="bg-yellow-500 text-white px-4 py-2 rounded"
-        on:click={() => pauseTimer()}>Pause</button>
-      <button
-        class="bg-red-500 text-white px-4 py-2 rounded"
-        on:click={() => resetTimer()}>Reset</button>
-    {/if}
-  </div>
-
-  {#each Array.from({ length: $timerStore.currentSet }) as _, i (i)}
-    <div class="bg-blue-100 text-blue-800 px-4 py-2 rounded mb-2">
-      Set {i + 1}
-    </div>
-  {/each}
-</section> -->
-
 <script lang="ts">
 import {
   timerStore,
@@ -90,7 +7,7 @@ import {
   incrementCurrentSet,
   decrementCurrentSet,
   formatTime,
-} from "$lib/timerStore";
+} from "$lib/stores/timerStore";
 </script>
 
 <div class="container mx-auto p-4">

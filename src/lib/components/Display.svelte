@@ -3,7 +3,11 @@ import { fly, fade, scale, crossfade } from "svelte/transition";
 import { tweened, type Tweened } from "svelte/motion";
 import { cubicOut } from "svelte/easing";
 
-import { timerStore, formatTime, progressPercentage } from "$lib/timerStore";
+import {
+  timerStore,
+  formatTime,
+  progressPercentage,
+} from "$lib/stores/timerStore";
 
 let minutes: string;
 let seconds: string;

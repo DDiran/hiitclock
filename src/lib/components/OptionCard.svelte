@@ -7,6 +7,8 @@ export let image: string;
 export let title: string;
 export let value: string;
 export let onSelectOption: (value: string) => void;
+export let category: string;
+export let copy: string;
 </script>
 
 <div>
@@ -30,11 +32,12 @@ export let onSelectOption: (value: string) => void;
       <img src={image} alt="Shoes" class="rounded-xl" />
     </figure>
     <div class="card-body items-center text-center">
+      <span class="text-primary font-sans uppercase text-xs leading-3"
+        >{category}</span>
       <h2 class="card-title font-serif text-2xl">{title}</h2>
-      <p>If a dog chews shoes whose shoes does he choose?</p>
-      <!-- <div class="card-actions">
-        <button class="btn btn-tertiary">Let's go</button>
-      </div> -->
+      <p class=" italic text-lg leading-6 opacity-70">
+        {copy}
+      </p>
     </div>
   </label>
 </div>

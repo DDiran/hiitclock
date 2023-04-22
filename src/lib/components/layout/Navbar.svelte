@@ -1,5 +1,5 @@
 <script lang="ts">
-import { totalWorkoutTime } from "$lib/timerStore";
+import { totalWorkoutTime } from "$lib/stores/timerStore";
 
 let workoutTimeMinutes: number = 0;
 $: workoutTimeMinutes = Math.round($totalWorkoutTime / 60);
