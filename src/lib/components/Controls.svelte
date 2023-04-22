@@ -7,13 +7,19 @@ import {
   resetTimer,
   unpauseTimer,
 } from "$lib/stores/timerStore";
+import { showSettings } from "$lib/stores/workoutStore";
 </script>
 
 <div class="flex justify-center space-x-4 mt-8">
   {#if !$timerStore.workoutStarted}
-    <button
-      class=" border-white border rounded-2xl px-16 py-4 hover:bg-primary hover:border-primary"
-      on:click={startTimer}>Let's Go</button>
+    {#if $showSettings}
+      <button
+        class=" border-white border rounded-2xl px-16 py-4 hover:bg-primary hover:border-primary"
+        on:click={() => ($showSettings = false)}>Back</button>
+      <button
+        class=" border-white border rounded-2xl px-16 py-4 hover:bg-primary hover:border-primary"
+        on:click={startTimer}>Let's Go</button>
+    {/if}
   {/if}
   {#if $timerStore.workoutStarted && !$timerStore.workoutPaused}
     <button class="btn btn-circle btn-lg" on:click={pauseTimer}

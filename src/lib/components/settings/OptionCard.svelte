@@ -9,6 +9,7 @@ export let value: string;
 export let onSelectOption: (value: string) => void;
 export let category: string;
 export let copy: string;
+export let disabled: boolean = false;
 </script>
 
 <div>
@@ -19,9 +20,12 @@ export let copy: string;
     type="radio"
     name="workout-options"
     value={value}
+    disabled={disabled}
     checked={checked} />
   <label
-    class="card w-96 bg-base-400 shadow-xl cursor-pointer border-4 border-base-400 hover:border-4 peer-checked:border-4 hover:border-primary peer-checked:border-primary"
+    class="card shadow-xl rounded-md w-96 bg-base-400 border-4 border-base-400 {disabled
+      ? 'cursor-not-allowed'
+      : 'cursor-pointer hover:border-4 peer-checked:border-4 hover:border-primary peer-checked:border-primary'} "
     for={id}>
     {#if checked}
       <div class="absolute top-0 right-0 mt-2 mr-2 text-primary">
@@ -29,9 +33,13 @@ export let copy: string;
       </div>
     {/if}
     <figure class="px-10 pt-10">
-      <img src={image} alt="Shoes" class="rounded-xl" />
+      <img
+        src={image}
+        alt="Shoes"
+        class="rounded-xl {disabled ? 'grayscale' : ''}" />
     </figure>
-    <div class="card-body items-center text-center">
+    <div
+      class="card-body items-center text-center {disabled ? 'grayscale' : ''}">
       <span class="text-primary font-sans uppercase text-xs leading-3"
         >{category}</span>
       <h2 class="card-title font-serif text-2xl">{title}</h2>

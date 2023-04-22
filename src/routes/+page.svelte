@@ -2,7 +2,7 @@
 import { onMount, onDestroy } from "svelte";
 import { browser } from "$app/environment";
 
-import Settings from "$lib/components/SettingsSets.svelte";
+import SettingsOptions from "$lib/components/settings/SettingsOptions.svelte";
 import Display from "$lib/components/Display.svelte";
 import Controls from "$lib/components/Controls.svelte";
 
@@ -13,7 +13,6 @@ import {
   playLongBeep,
 } from "$lib/utils/audio";
 import JSConfetti from "js-confetti";
-import SettingsOptions from "$lib/components/SettingsOptions.svelte";
 
 let audioContext: AudioContext | undefined;
 let jsConfetti: JSConfetti | undefined;
@@ -61,5 +60,7 @@ onDestroy(() => {
 <main class="container mx-auto mb-auto mt-10 flex-grow">
   <SettingsOptions />
   <Controls />
-  <Display />
+  {#if $timerStore.workoutStarted}
+    <Display />
+  {/if}
 </main>
