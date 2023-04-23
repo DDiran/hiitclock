@@ -1,8 +1,10 @@
 <script lang="ts">
-import { timerStore } from "$lib/stores/timerStore";
+import { timerStore, totalWorkoutTime } from "$lib/stores/timerStore";
 import NumberInput from "$lib/components/NumberInput.svelte";
+import SettingsDisplayCard from "./SettingsDisplayCard.svelte";
 </script>
 
+<SettingsDisplayCard displayMode="setsMode" displayNumber={$totalWorkoutTime} />
 <form>
   <div class="grid justify-center lg:grid-cols-3 gap-4 mx-12 md:mx-auto">
     <NumberInput

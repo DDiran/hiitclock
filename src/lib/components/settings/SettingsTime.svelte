@@ -1,6 +1,7 @@
 <script lang="ts">
 import { timerStore, totalSetTime } from "$lib/stores/timerStore";
 import NumberInput from "$lib/components/NumberInput.svelte";
+import SettingsDisplayCard from "./SettingsDisplayCard.svelte";
 
 let workoutMinutes = 15;
 
@@ -10,6 +11,7 @@ const calculateNumberOfSets = () => {
 };
 </script>
 
+<SettingsDisplayCard displayMode="timeMode" displayNumber={$timerStore.sets} />
 <form>
   <div class="grid justify-center lg:grid-cols-3 gap-4 mx-12 md:mx-auto">
     <NumberInput
