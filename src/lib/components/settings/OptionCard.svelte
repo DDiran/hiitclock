@@ -1,6 +1,6 @@
 <script lang="ts">
 import { Icon, CheckCircle } from "svelte-hero-icons";
-import { fade } from "svelte/transition";
+import { fly } from "svelte/transition";
 
 export let checked: boolean = false;
 export let id: string;
@@ -22,8 +22,7 @@ export let disabled: boolean = false;
     name="workout-options"
     value={value}
     disabled={disabled}
-    checked={checked}
-    in:fade|local={{ duration: 300 }} />
+    checked={checked} />
   <label
     class="card shadow-xl rounded-md w-96 bg-base-400 border-4 border-base-400 {disabled
       ? 'cursor-not-allowed'

@@ -2,6 +2,7 @@
 import { timerStore, totalSetTime } from "$lib/stores/timerStore";
 import NumberInput from "$lib/components/settings/NumberInput.svelte";
 import SettingsDisplayCard from "$lib/components/settings/SettingsDisplayCard.svelte";
+import { fade } from "svelte/transition";
 
 let workoutMinutes = 15;
 
@@ -12,7 +13,7 @@ const calculateNumberOfSets = () => {
 </script>
 
 <SettingsDisplayCard displayMode="timeMode" displayNumber={$timerStore.sets} />
-<form>
+<form in:fade>
   <div class="grid justify-center lg:grid-cols-3 gap-4 mx-12 md:mx-auto">
     <NumberInput
       id="sets"

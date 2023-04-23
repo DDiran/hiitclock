@@ -1,6 +1,8 @@
 <script lang="ts">
 import { onMount, onDestroy } from "svelte";
 import { browser } from "$app/environment";
+import { OnMount } from "fractils";
+import { fade } from "svelte/transition";
 
 import SettingsOptions from "$lib/components/settings/SettingsOptions.svelte";
 import Display from "$lib/components/display/Display.svelte";
@@ -57,12 +59,14 @@ onDestroy(() => {
 });
 </script>
 
-<main class="container mx-auto mb-auto mt-10 flex-grow">
-  {#if !$timerStore.workoutStarted}
-    <SettingsOptions />
-  {/if}
-  <Controls />
-  {#if $timerStore.workoutStarted}
-    <Display />
-  {/if}
-</main>
+<OnMount>
+  <div transition:fade class="container mx-auto mb-auto mt-10 flex-grow">
+    {#if !$timerStore.workoutStarted}
+      <SettingsOptions />
+    {/if}
+    <Controls />
+    {#if $timerStore.workoutStarted}
+      <Display />
+    {/if}
+  </div>
+</OnMount>
