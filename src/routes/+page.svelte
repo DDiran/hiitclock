@@ -2,7 +2,6 @@
 import { onMount, onDestroy } from "svelte";
 import { browser } from "$app/environment";
 import { OnMount } from "fractils";
-import { fade } from "svelte/transition";
 
 import SettingsOptions from "$lib/components/settings/SettingsOptions.svelte";
 import Display from "$lib/components/display/Display.svelte";
@@ -15,6 +14,7 @@ import {
   playLongBeep,
 } from "$lib/utils/audio";
 import JSConfetti from "js-confetti";
+import BackgroundPattern from "$lib/components/layout/BackgroundPattern.svelte";
 
 let audioContext: AudioContext | undefined;
 let jsConfetti: JSConfetti | undefined;
@@ -60,7 +60,8 @@ onDestroy(() => {
 </script>
 
 <OnMount>
-  <div transition:fade class="container mx-auto mb-auto mt-10 flex-grow">
+  <BackgroundPattern className="opacity-10" />
+  <div class="container mx-auto mb-auto mt-10 flex-grow">
     {#if !$timerStore.workoutStarted}
       <SettingsOptions />
     {/if}

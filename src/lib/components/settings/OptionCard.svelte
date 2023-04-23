@@ -24,9 +24,9 @@ export let disabled: boolean = false;
     disabled={disabled}
     checked={checked} />
   <label
-    class="card shadow-xl rounded-md w-96 bg-base-400 border-4 border-base-400 {disabled
-      ? 'cursor-not-allowed'
-      : 'cursor-pointer hover:border-4 peer-checked:border-4 hover:border-primary peer-checked:border-primary'} "
+    class="card shadow-xl rounded-md w-96 border-4 {disabled
+      ? 'cursor-not-allowed bg-base-400/30 border-base-400/30'
+      : 'cursor-pointer bg-base-400 border-base-400 hover:border-4 peer-checked:border-4 hover:border-primary peer-checked:border-primary'} "
     for={id}>
     {#if checked}
       <div class="absolute top-0 right-0 mt-2 mr-2 text-primary">
