@@ -4,9 +4,6 @@ import {
   startTimer,
   pauseTimer,
   resetTimer,
-  incrementCurrentSet,
-  decrementCurrentSet,
-  formatTime,
 } from "$lib/stores/timerStore";
 </script>
 

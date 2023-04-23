@@ -3,8 +3,8 @@ import { onMount, onDestroy } from "svelte";
 import { browser } from "$app/environment";
 
 import SettingsOptions from "$lib/components/settings/SettingsOptions.svelte";
-import Display from "$lib/components/Display.svelte";
-import Controls from "$lib/components/Controls.svelte";
+import Display from "$lib/components/display/Display.svelte";
+import Controls from "$lib/components/display/Controls.svelte";
 
 import { timerStore } from "$lib/stores/timerStore";
 import {
@@ -58,7 +58,9 @@ onDestroy(() => {
 </script>
 
 <main class="container mx-auto mb-auto mt-10 flex-grow">
-  <SettingsOptions />
+  {#if !$timerStore.workoutStarted}
+    <SettingsOptions />
+  {/if}
   <Controls />
   {#if $timerStore.workoutStarted}
     <Display />

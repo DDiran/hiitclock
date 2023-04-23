@@ -1,11 +1,13 @@
 <script lang="ts">
-import { totalWorkoutTime } from "$lib/stores/timerStore";
 </script>
 
 <div class="navbar bg-base-400 shadow-md">
   <div class="container mx-auto">
     <div class="flex-1">
-      <a href="/" class="btn btn-ghost normal-case text-xl">JustHIIT.it</a>
+      <a
+        data-sveltekit-reload
+        href="/"
+        class="btn btn-ghost normal-case text-xl">JustHIIT.it</a>
     </div>
     <div class="flex-none">
       <ul class="menu menu-horizontal px-1">

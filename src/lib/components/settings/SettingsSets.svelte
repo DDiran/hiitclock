@@ -1,7 +1,7 @@
 <script lang="ts">
 import { timerStore, totalWorkoutTime } from "$lib/stores/timerStore";
-import NumberInput from "$lib/components/NumberInput.svelte";
-import SettingsDisplayCard from "./SettingsDisplayCard.svelte";
+import NumberInput from "$lib/components/settings/NumberInput.svelte";
+import SettingsDisplayCard from "$lib/components/settings/SettingsDisplayCard.svelte";
 </script>
 
 <SettingsDisplayCard displayMode="setsMode" displayNumber={$totalWorkoutTime} />
